@@ -1,6 +1,6 @@
 # where_to_go
 ![Alt text](https://github.com/lexashvetsoff/where_to_go/blob/main/screenshots/where_to_go_1.png)
-Сайт выодит интересные места на карте с их описанием.  
+Сайт выводит интересные места на карте с их описанием.  
 [Пример сайта](https://lexashvetsoff.pythonanywhere.com/)
 
 ## Как запустить
@@ -26,10 +26,10 @@ python3 manage.py runserver
 Доступны переменные:
 - `DEBUG` — дебаг-режим. Поставьте True, чтобы увидеть отладочную информацию в случае ошибки.
 - `SECRET_KEY` — секретный ключ проекта  
-- `SECURE_HSTS_SECONDS` — при деплои поставить True  
-- `SECURE_SSL_REDIRECT` — при деплои поставить True  
-- `SESSION_COOKIE_SECURE` — при деплои поставить True  
-- `CSRF_COOKIE_SECURE` — при деплои поставить True  
+- `SECURE_HSTS_SECONDS` — в production среде эти переменные среды окружения должны иметь значения ```True``` [Документация](https://docs.djangoproject.com/en/4.0/ref/settings/#secure-hsts-seconds)  
+- `SECURE_SSL_REDIRECT` — в production среде эти переменные среды окружения должны иметь значения ```True``` [Документация](https://docs.djangoproject.com/en/4.0/ref/settings/#secure-ssl-redirect)  
+- `SESSION_COOKIE_SECURE` — в production среде эти переменные среды окружения должны иметь значения ```True``` [Документация](https://docs.djangoproject.com/en/4.0/ref/settings/#session-cookie-secure)  
+- `CSRF_COOKIE_SECURE` — в production среде эти переменные среды окружения должны иметь значения ```True``` [Документация](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-cookie-secure)  
 
 ## API
 У сайта есть свой API, который отдает информацию в формате json по выбранному месту. Для этого к домену необходимо добавить запись вида "/places/id места", например: ```https://lexashvetsoff.pythonanywhere.com/places/1```
