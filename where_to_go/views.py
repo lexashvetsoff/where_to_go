@@ -26,7 +26,7 @@ def get_places_geojson(places, images):
         filtered_images = images.filter(place=place.id).values()
         imgs = []
         for image in filtered_images:
-            img = f"media/{image['image']}"
+            img = f"{image['image']}"
             imgs.append(img)
         serialize_place = {
             'title': place.title,
