@@ -40,10 +40,10 @@ python3 manage.py runserver
 Доступны переменные:
 - `DEBUG` — дебаг-режим. Поставьте True, чтобы увидеть отладочную информацию в случае ошибки.
 - `SECRET_KEY` — секретный ключ проекта  
-- `SECURE_HSTS_SECONDS` — в production среде эти переменные среды окружения должны иметь значения ```True``` см[документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#secure-hsts-seconds)  
-- `SECURE_SSL_REDIRECT` — в production среде эти переменные среды окружения должны иметь значения ```True``` см[документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#secure-ssl-redirect)  
-- `SESSION_COOKIE_SECURE` — в production среде эти переменные среды окружения должны иметь значения ```True``` см[документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#session-cookie-secure)  
-- `CSRF_COOKIE_SECURE` — в production среде эти переменные среды окружения должны иметь значения ```True``` см[документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-cookie-secure)  
+- `SECURE_HSTS_SECONDS` — в production среде эти переменные среды окружения должны иметь значения ```True``` см [документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#secure-hsts-seconds)  
+- `SECURE_SSL_REDIRECT` — в production среде эти переменные среды окружения должны иметь значения ```True``` см [документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#secure-ssl-redirect)  
+- `SESSION_COOKIE_SECURE` — в production среде эти переменные среды окружения должны иметь значения ```True``` см [документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#session-cookie-secure)  
+- `CSRF_COOKIE_SECURE` — в production среде эти переменные среды окружения должны иметь значения ```True``` см [документацию](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-cookie-secure)  
 - `ALLOWED_HOSTS` — см [документацию](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts)
 
 ## API
