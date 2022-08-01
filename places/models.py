@@ -35,7 +35,7 @@ class PlaceImage(models.Model):
     )
 
     def __str__(self):
-        return f'{self.serial_number} {self.place}'
+        return f'{self.order_number} {self.place}'
     
     class Meta:
         ordering = ['order_number',]
