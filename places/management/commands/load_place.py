@@ -17,7 +17,7 @@ class Command(BaseCommand):
         if 'http' == file_path[:4]:
             response = requests.get(file_path)
             response.raise_for_status()
-            place = json.loads(response.json())
+            place = response.json()
 
             obj, created = Place.objects.get_or_create(
                 title = place['title'],
