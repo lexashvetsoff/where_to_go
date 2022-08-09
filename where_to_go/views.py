@@ -43,7 +43,7 @@ def get_places_geojson(places, images):
 
 
 def write_json(name_file, data):
-  dir_name = 'static/places'
+  dir_name = 'static'
   file_path = f'{dir_name}/{name_file}.json'
 
   with open(file_path, 'w', encoding="utf-8") as file:

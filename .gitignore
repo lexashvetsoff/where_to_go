@@ -131,3 +131,4 @@ dmypy.json
 media/
 static/places/
 assets/
+*.json
