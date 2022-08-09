@@ -1,4 +1,3 @@
-from encodings.utf_8 import encode
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.template import loader
