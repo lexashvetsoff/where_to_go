@@ -15,15 +15,8 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
         extra = 1
         return extra
     
-    def get_preview_image(self, obj):
-        img_width = obj.image.width / 5
-        img_height = obj.image.height / 5
-
-        if img_height > 200:
-            img_width = obj.image.width / 7
-            img_height = obj.image.height / 7
-        
-        return format_html(f'<img src="{obj.image.url}" width="{img_width}" height="{img_height}"/>')
+    def get_preview_image(self, obj):        
+        return format_html(f'<img src="{obj.image.url}" style="max-height: 200px;"/>')
     
     get_preview_image.short_description = 'Превью'
 
