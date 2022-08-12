@@ -116,4 +116,4 @@ def get_place_details(request, place_id):
         }
     }
 
-    return JsonResponse(json.dumps(place_details, ensure_ascii=False, indent=4), safe=False)
+    return JsonResponse(place_details)
