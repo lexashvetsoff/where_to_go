@@ -76,7 +76,7 @@ def index(request):
             },
             "properties": {
               "title": place['title'],
-              "placeId": place_file_name,
+              "placeId": place['id'],
               "detailsUrl": details_url
             #   "detailsUrl": redirect(reverse('places', kwargs={'place_id': place['id']}))
             }
