@@ -90,7 +90,7 @@ def index(request):
 
     template = loader.get_template('index.html')
     context = {
-        'places_geogson': geo_places    
+        'places_geojson': geo_places    
     }
     rendered_page = template.render(context, request)
 
