@@ -100,7 +100,7 @@ def index(request):
 def place_details(request, place_id):
     place = get_object_or_404(Place, id=place_id)
 
-    images = PlaceImage.objects.filter(place=place_id).values()
+    images = place.places.filter(place=place_id).values()
     imgs = []
     for image in images:
         imgs.append(image['image'])
