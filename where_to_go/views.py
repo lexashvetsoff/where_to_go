@@ -1,6 +1,7 @@
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, JsonResponse, HttpRequest
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
+from django.urls import reverse
 
 from places.models import Place, PlaceImage
 
@@ -64,6 +65,8 @@ def index(request):
         name_split = name.split()
         place_id = '_'.join(name_split)
         details_url = write_json(place_id, geo_json[place['id']])
+        print(redirect(reverse('places', args=[place['id']])))
+        print(redirect(reverse('places', kwargs={'place_id': place['id']})))
         serialize_features = {
             'type': "Feature",
             "geometry": {
@@ -73,7 +76,8 @@ def index(request):
             "properties": {
               "title": place['title'],
               "placeId": place_id,
-              "detailsUrl": details_url
+            #   "detailsUrl": details_url
+              "detailsUrl": redirect(reverse('places', kwargs={'place_id': place['id']}))
             }
         }
         features.append(serialize_features)
