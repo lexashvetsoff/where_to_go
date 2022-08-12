@@ -64,8 +64,8 @@ def index(request):
     for place in serialize_places:
         name = place['title']
         name_split = name.split()
-        place_id = '_'.join(name_split)
-        details_url = write_json(place_id, geo_json[place['id']])
+        place_file_name = '_'.join(name_split)
+        details_url = write_json(place_file_name, geo_json[place['id']])
         # print(redirect(reverse('places', args=[place['id']])))
         # print(redirect(reverse('places', kwargs={'place_id': place['id']})))
         serialize_features = {
@@ -76,7 +76,7 @@ def index(request):
             },
             "properties": {
               "title": place['title'],
-              "placeId": place_id,
+              "placeId": place_file_name,
               "detailsUrl": details_url
             #   "detailsUrl": redirect(reverse('places', kwargs={'place_id': place['id']}))
             }
