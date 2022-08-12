@@ -58,7 +58,8 @@ class Command(BaseCommand):
                         response.raise_for_status()
 
                         parts = img.split('/')
-                        image_name = parts[-1].split('.')[0]
+                        # image_name = parts[-1].split('.')[0]
+                        image_name = parts[-1]
 
                         new_place = Place.objects.get(id=obj.id)
                         new_image = PlaceImage(place=new_place)

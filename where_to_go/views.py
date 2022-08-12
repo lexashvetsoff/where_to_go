@@ -26,7 +26,7 @@ def get_places_geojson(places, images):
         filtered_images = images.filter(place=place.id).values()
         imgs = []
         for image in filtered_images:
-            img = f"{image['image']}"
+            img = 'media/{}'.format(image['image'])
             imgs.append(img)
         serialize_place = {
             'title': place.title,
@@ -38,6 +38,7 @@ def get_places_geojson(places, images):
                 'lat': place.lat
             }
         }
+        print(imgs)
         places_geo[place.id] = serialize_place
     return places_geo
 
@@ -65,8 +66,8 @@ def index(request):
         name_split = name.split()
         place_id = '_'.join(name_split)
         details_url = write_json(place_id, geo_json[place['id']])
-        print(redirect(reverse('places', args=[place['id']])))
-        print(redirect(reverse('places', kwargs={'place_id': place['id']})))
+        # print(redirect(reverse('places', args=[place['id']])))
+        # print(redirect(reverse('places', kwargs={'place_id': place['id']})))
         serialize_features = {
             'type': "Feature",
             "geometry": {
@@ -76,8 +77,8 @@ def index(request):
             "properties": {
               "title": place['title'],
               "placeId": place_id,
-            #   "detailsUrl": details_url
-              "detailsUrl": redirect(reverse('places', kwargs={'place_id': place['id']}))
+              "detailsUrl": details_url
+            #   "detailsUrl": redirect(reverse('places', kwargs={'place_id': place['id']}))
             }
         }
         features.append(serialize_features)
