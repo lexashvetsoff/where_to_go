@@ -83,14 +83,14 @@ def index(request):
         }
         features.append(serialize_features)
     
-    places_geojson = {
+    geo_places = {
       'type': 'FeatureCollection',
       'features': features
     }
 
     template = loader.get_template('index.html')
     context = {
-        'places_geogson': places_geojson
+        'places_geogson': geo_places    
     }
     rendered_page = template.render(context, request)
 
