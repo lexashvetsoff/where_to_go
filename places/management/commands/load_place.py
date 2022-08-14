@@ -37,7 +37,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         file_path = kwargs['file_path']
 
-        if 'http' == file_path[:4]:
+        if file_path.startswith(("https://", "http://",)):
             response = requests.get(file_path)
             response.raise_for_status()
             place = response.json()
