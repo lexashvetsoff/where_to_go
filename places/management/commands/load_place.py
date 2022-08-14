@@ -62,5 +62,5 @@ class Command(BaseCommand):
             except MultipleObjectsReturned:
                 print('error')
 
-                if created:
-                    self.create_images(place['imgs'], new_place)
+            if created:
+                self.create_images(place['imgs'], new_place)
