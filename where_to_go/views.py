@@ -21,11 +21,11 @@ def get_serialize_places(places):
 def index(request):
     places = Place.objects.all()
 
-    serialize_places = get_serialize_places(places)
+    serialized_places = get_serialize_places(places)
 
     features = []
-    for place in serialize_places:
-        serialize_features = {
+    for place in serialized_places:
+        serialized_features = {
             'type': "Feature",
             "geometry": {
               "type": "Point",
@@ -37,7 +37,7 @@ def index(request):
               "detailsUrl": reverse('places', kwargs={'place_id': place['id']})
             }
         }
-        features.append(serialize_features)
+        features.append(serialized_features)
 
     geo_places = {
       'type': 'FeatureCollection',
