@@ -6,35 +6,21 @@ from django.urls import reverse
 from places.models import Place
 
 
-def get_serialize_places(places):
-    serialize_places = []
-    for place in places:
-        dict_place = {
-            'id': place.id,
-            'title': place.title,
-            'coordinates': [place.lng, place.lat]
-        }
-        serialize_places.append(dict_place)
-    return serialize_places
-
-
 def index(request):
     places = Place.objects.all()
 
-    serialized_places = get_serialize_places(places)
-
     features = []
-    for place in serialized_places:
+    for place in places:
         serialized_features = {
             'type': "Feature",
             "geometry": {
               "type": "Point",
-              "coordinates": place['coordinates'],
+              "coordinates": [place.lng, place.lat],
             },
             "properties": {
-              "title": place['title'],
-              "placeId": place['id'],
-              "detailsUrl": reverse('places', kwargs={'place_id': place['id']})
+              "title": place.title,
+              "placeId": place.id,
+              "detailsUrl": reverse('places', kwargs={'place_id': place.id})
             }
         }
         features.append(serialized_features)
@@ -56,11 +42,8 @@ def index(request):
 def get_place_details(request, place_id):
     place = get_object_or_404(Place, id=place_id)
 
-    images = place.places.filter(place=place_id).values()
-    imgs = []
-    for image in images:
-        img = 'media/{}'.format(image['image'])
-        imgs.append(img)
+    images = place.places.filter(place=place_id)
+    imgs = ['media/{}'.format(image.image) for image in images]
 
     place_details = {
         'title': place.title,

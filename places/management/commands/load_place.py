@@ -1,3 +1,4 @@
+from email.mime import image
 from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
 from places.models import Place, PlaceImage
@@ -35,14 +36,10 @@ class Command(BaseCommand):
                     parts = img.split('/')
                     image_name = parts[-1]
 
-                    new_place = Place.objects.get(id=obj.id)
-                    new_image = PlaceImage(place=new_place)
-                    new_image.save()
-                    new_image.image.save(
-                        image_name,
-                        ContentFile(response.content),
-                        save=True
-                    )
+                    PlaceImage.objects.create(
+                        place=obj,
+                        image=ContentFile(response.content, image_name)
+                    ).save()
 
         else:
             with open(file_path, 'r', encoding='utf-8') as file:
@@ -64,11 +61,7 @@ class Command(BaseCommand):
                         parts = img.split('/')
                         image_name = parts[-1]
 
-                        new_place = Place.objects.get(id=obj.id)
-                        new_image = PlaceImage(place=new_place)
-                        new_image.save()
-                        new_image.image.save(
-                            image_name,
-                            ContentFile(response.content),
-                            save=True
-                        )
+                        PlaceImage.objects.create(
+                            place=obj,
+                            image=ContentFile(response.content, image_name)
+                        ).save()
