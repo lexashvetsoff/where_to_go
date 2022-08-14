@@ -12,10 +12,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file_path', type=str, help=u'Ссылка на файл json')
     
-    # def check_errors(response):
-    #     if 'error' in response:
-    #         raise requests.HTTPError
-    
     def create_place(self, place):
         try:
             return Place.objects.get_or_create(
@@ -50,21 +46,21 @@ class Command(BaseCommand):
             place = response.json()
 
             try:
-                obj, created = self.create_place(place)
+                new_place, created = self.create_place(place)
             except MultipleObjectsReturned:
                 print('error')
 
             if created:
-                self.create_images(place['imgs'], obj)
+                self.create_images(place['imgs'], new_place)
 
         else:
             with open(file_path, 'r', encoding='utf-8') as file:
                 place = json.load(file)
 
             try:
-                obj, created = self.create_place(place)
+                new_place, created = self.create_place(place)
             except MultipleObjectsReturned:
                 print('error')
 
                 if created:
-                    self.create_images(place['imgs'], obj)
+                    self.create_images(place['imgs'], new_place)
