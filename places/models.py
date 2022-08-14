@@ -23,7 +23,7 @@ class PlaceImage(models.Model):
         Place,
         verbose_name='Место',
         on_delete=models.CASCADE,
-        related_name='places'
+        related_name='images'
     )
     order_number = models.PositiveSmallIntegerField(
         verbose_name='Порядковый номер',
