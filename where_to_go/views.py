@@ -52,4 +52,7 @@ def get_place_details(request, place_id):
         }
     }
 
-    return JsonResponse(place_details, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse(
+        place_details,
+        json_dumps_params={'ensure_ascii': False}
+    )
