@@ -4,6 +4,7 @@ from django.core.exceptions import MultipleObjectsReturned
 from places.models import Place, PlaceImage
 import json
 import requests
+import sys
 
 
 class Command(BaseCommand):
@@ -45,7 +46,8 @@ class Command(BaseCommand):
             try:
                 new_place, created = self.create_place(place)
             except MultipleObjectsReturned:
-                print('error')
+                print('Такой объект уже существует.')
+                sys.exit()
 
             if created:
                 self.create_images(place['imgs'], new_place)
@@ -57,7 +59,8 @@ class Command(BaseCommand):
             try:
                 new_place, created = self.create_place(place)
             except MultipleObjectsReturned:
-                print('error')
+                print('Такой объект уже существует.')
+                sys.exit()
 
             if created:
                 self.create_images(place['imgs'], new_place)
