@@ -13,16 +13,13 @@ class Command(BaseCommand):
         parser.add_argument('file_path', type=str, help=u'Ссылка на файл json')
     
     def create_place(self, place):
-        try:
-            return Place.objects.get_or_create(
-                title=place['title'],
-                description_short=place['description_short'],
-                description_long=place['description_long'],
-                lng=place['coordinates']['lng'],
-                lat=place['coordinates']['lat']
-            )
-        except:
-            raise MultipleObjectsReturned
+        return Place.objects.get_or_create(
+            title=place['title'],
+            description_short=place['description_short'],
+            description_long=place['description_long'],
+            lng=place['coordinates']['lng'],
+            lat=place['coordinates']['lat']
+        )
     
     def create_images(self, images, place):
         for img in images:
