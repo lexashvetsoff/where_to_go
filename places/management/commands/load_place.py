@@ -16,12 +16,14 @@ class Command(BaseCommand):
 
 
     def create_place(self, place):
-        return Place.objects.get_or_create(
+        return Place.objects.update_or_create(
             title=place['title'],
-            description_short=place['description_short'],
-            description_long=place['description_long'],
-            lng=place['coordinates']['lng'],
-            lat=place['coordinates']['lat']
+            defaults={
+                'description_short': place['description_short'],
+                'description_long': place['description_long'],
+                'lng': place['coordinates']['lng'],
+                'lat': place['coordinates']['lat']
+            }
         )
 
 
