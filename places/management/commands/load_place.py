@@ -34,33 +34,38 @@ class Command(BaseCommand):
                 place=place,
                 image=ContentFile(response.content, image_name)
             )
+    
+    def create_from_url(self, url):
+        response = requests.get(url)
+        response.raise_for_status()
+        place = response.json()
+
+        try:
+            new_place, created = self.create_place(place)
+        except MultipleObjectsReturned:
+            print('Такой объект уже существует.')
+            sys.exit()
+
+        if created:
+            self.create_images(place['imgs'], new_place)
+    
+    def create_from_file(self, file_path):
+        with open(file_path, 'r', encoding='utf-8') as file:
+            place = json.load(file)
+
+        try:
+            new_place, created = self.create_place(place)
+        except MultipleObjectsReturned:
+            print('Такой объект уже существует.')
+            sys.exit()
+
+        if created:
+            self.create_images(place['imgs'], new_place)
 
     def handle(self, *args, **kwargs):
         file_path = kwargs['file_path']
 
         if file_path.startswith(("https://", "http://",)):
-            response = requests.get(file_path)
-            response.raise_for_status()
-            place = response.json()
-
-            try:
-                new_place, created = self.create_place(place)
-            except MultipleObjectsReturned:
-                print('Такой объект уже существует.')
-                sys.exit()
-
-            if created:
-                self.create_images(place['imgs'], new_place)
-
+            self.create_from_url(file_path)
         else:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                place = json.load(file)
-
-            try:
-                new_place, created = self.create_place(place)
-            except MultipleObjectsReturned:
-                print('Такой объект уже существует.')
-                sys.exit()
-
-            if created:
-                self.create_images(place['imgs'], new_place)
+            self.create_from_file(file_path)
