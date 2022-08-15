@@ -38,7 +38,7 @@ def index(request):
 def get_place_details(request, place_id):
     place = get_object_or_404(Place, id=place_id)
 
-    images = place.images.filter(place=place_id)
+    images = place.images.all()
     imgs = [image.image.url for image in images]
 
     place_details = {
