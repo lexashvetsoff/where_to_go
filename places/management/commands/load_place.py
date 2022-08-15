@@ -35,7 +35,7 @@ class Command(BaseCommand):
             PlaceImage.objects.create(
                 place=place,
                 image=ContentFile(response.content, image_name)
-            ).save()
+            )
 
     def handle(self, *args, **kwargs):
         file_path = kwargs['file_path']
