@@ -10,9 +10,11 @@ import sys
 class Command(BaseCommand):
     help = u'Загрузка в базу данных с указанного адреса.'
 
+
     def add_arguments(self, parser):
         parser.add_argument('file_path', type=str, help=u'Ссылка на файл json')
-    
+
+
     def create_place(self, place):
         return Place.objects.get_or_create(
             title=place['title'],
@@ -21,7 +23,8 @@ class Command(BaseCommand):
             lng=place['coordinates']['lng'],
             lat=place['coordinates']['lat']
         )
-    
+
+
     def create_images(self, images, place):
         for img in images:
             response = requests.get(img)
@@ -34,33 +37,33 @@ class Command(BaseCommand):
                 place=place,
                 image=ContentFile(response.content, image_name)
             )
-    
+
+
+    def create_model_place(self, place):
+        try:
+            new_place, created = self.create_place(place)
+        except MultipleObjectsReturned:
+            print('Такой объект уже существует.')
+            sys.exit()
+
+        if created:
+            self.create_images(place['imgs'], new_place)
+
+
     def create_from_url(self, url):
         response = requests.get(url)
         response.raise_for_status()
         place = response.json()
 
-        try:
-            new_place, created = self.create_place(place)
-        except MultipleObjectsReturned:
-            print('Такой объект уже существует.')
-            sys.exit()
+        self.create_model_place(place)
 
-        if created:
-            self.create_images(place['imgs'], new_place)
-    
+
     def create_from_file(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             place = json.load(file)
 
-        try:
-            new_place, created = self.create_place(place)
-        except MultipleObjectsReturned:
-            print('Такой объект уже существует.')
-            sys.exit()
+        self.create_model_place(place)
 
-        if created:
-            self.create_images(place['imgs'], new_place)
 
     def handle(self, *args, **kwargs):
         file_path = kwargs['file_path']
