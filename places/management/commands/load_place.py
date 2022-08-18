@@ -13,17 +13,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file_path', type=str, help=u'Ссылка на файл json')
 
-    def create_place(self, place):
-        return Place.objects.update_or_create(
-            title=place['title'],
-            defaults={
-                'description_short': place['description_short'],
-                'description_long': place['description_long'],
-                'lng': place['coordinates']['lng'],
-                'lat': place['coordinates']['lat']
-            }
-        )
-
     def create_images(self, images, place):
         for img in images:
             response = requests.get(img)
@@ -39,7 +28,15 @@ class Command(BaseCommand):
 
     def create_model_place(self, place):
         try:
-            new_place, created = self.create_place(place)
+            new_place, created = Place.objects.update_or_create(
+                title=place['title'],
+                defaults={
+                    'description_short': place['description_short'],
+                    'description_long': place['description_long'],
+                    'lng': place['coordinates']['lng'],
+                    'lat': place['coordinates']['lat']
+                }
+            )
         except MultipleObjectsReturned:
             print('Такой объект уже существует.')
             sys.exit()
