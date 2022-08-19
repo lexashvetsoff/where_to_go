@@ -46,20 +46,20 @@ class Command(BaseCommand):
     def create_from_url(self, url):
         response = requests.get(url)
         response.raise_for_status()
-        place = response.json()
-
-        self.create_model_place(place)
+        return response.json()
 
     def create_from_file(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             place = json.load(file)
 
-        self.create_model_place(place)
+        return place
 
     def handle(self, *args, **kwargs):
         file_path = kwargs['file_path']
 
         if file_path.startswith(("https://", "http://",)):
-            self.create_from_url(file_path)
+            place = self.create_from_url(file_path)
+            self.create_model_place(place)
         else:
-            self.create_from_file(file_path)
+            place = self.create_from_file(file_path)
+            self.create_model_place(place)
