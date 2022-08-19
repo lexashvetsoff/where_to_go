@@ -27,6 +27,11 @@ class Command(BaseCommand):
             )
 
     def create_model_place(self, place):
+        if (not place['title'] or
+            not place['coordinates']['lng'] or
+                not place['coordinates']['lat']):
+                return print('Проверьте корректность данных.')
+
         try:
             new_place, created = Place.objects.update_or_create(
                 title=place['title'],
