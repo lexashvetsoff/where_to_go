@@ -39,7 +39,6 @@ class Command(BaseCommand):
             )
         except MultipleObjectsReturned:
             print('Такой объект уже существует.')
-            sys.exit()
 
         if created:
             self.create_images(place['imgs'], new_place)
