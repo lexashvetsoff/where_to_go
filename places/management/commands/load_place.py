@@ -27,44 +27,33 @@ class Command(BaseCommand):
             )
 
     def create_model_place(self, place):
-        if (not place['title'] or
-            not place['coordinates']['lng'] or
-                not place['coordinates']['lat']):
-                return print('Проверьте корректность данных.')
-
-        try:
-            new_place, created = Place.objects.update_or_create(
-                title=place['title'],
-                defaults={
-                    'description_short': place['description_short'],
-                    'description_long': place['description_long'],
-                    'lng': place['coordinates']['lng'],
-                    'lat': place['coordinates']['lat']
-                }
-            )
-        except MultipleObjectsReturned:
-            print('По запросу нашлось несколько объектов.')
+        new_place, created = Place.objects.update_or_create(
+            title=place['title'],
+            defaults={
+                'description_short': place.get('description_short', ''),
+                'description_long': place.get('description_long', ''),
+                'lng': place['coordinates']['lng'],
+                'lat': place['coordinates']['lat']
+            }
+        )
 
         if created:
             self.create_images(place['imgs'], new_place)
-
-    def create_from_url(self, url):
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
-
-    def create_from_file(self, file_path):
-        with open(file_path, 'r', encoding='utf-8') as file:
-            place = json.load(file)
-
-        return place
 
     def handle(self, *args, **kwargs):
         file_path = kwargs['file_path']
 
         if file_path.startswith(("https://", "http://",)):
-            place = self.create_from_url(file_path)
-            self.create_model_place(place)
+            response = requests.get(file_path)
+            response.raise_for_status()
+            place = response.json()
         else:
-            place = self.create_from_file(file_path)
+            with open(file_path, 'r', encoding='utf-8') as file:
+                place = json.load(file)
+        
+        try:
             self.create_model_place(place)
+        except KeyError:
+            print('Отсутствуют обязательные поля')
+        except MultipleObjectsReturned:
+            print('По запросу нашлось несколько объектов. Невозможно определить объект, требующий обновления')
