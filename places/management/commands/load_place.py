@@ -4,7 +4,6 @@ from django.core.exceptions import MultipleObjectsReturned
 from places.models import Place, PlaceImage
 import json
 import requests
-import sys
 
 
 class Command(BaseCommand):
@@ -50,7 +49,7 @@ class Command(BaseCommand):
         else:
             with open(file_path, 'r', encoding='utf-8') as file:
                 place = json.load(file)
-        
+
         try:
             self.create_model_place(place)
         except KeyError:
